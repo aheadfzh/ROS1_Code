@@ -1,0 +1,21 @@
+<launch>
+
+  <!-- 设置debug参数，默认为false -->
+  <arg name="debug" default="false" />
+  <!-- 根据debug参数设置launch_prefix -->
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+
+  <!-- 设置rviz_config参数为指定的RViz配置文件 -->
+  <arg name="rviz_config" default="$(find fzh_ur_pkg)/rviz/ur10e_ros_control.rviz" />
+  <!-- 根据rviz_config是否为空设置command_args -->
+  <arg if="$(eval rviz_config!='')" name="command_args" value="-d $(arg rviz_config)" />
+  <!-- 如果rviz_config为空，则不需要设置command_args，因为已经通过default设置了默认值 -->
+
+  <!-- 启动RViz节点，使用指定的配置文件 -->
+  <node name="$(anon rviz)" launch-prefix="$(arg launch_prefix)" pkg="rviz" type="rviz" respawn="false"
+        args="$(arg command_args)" output="screen">
+  </node>
+
+</launch>
+

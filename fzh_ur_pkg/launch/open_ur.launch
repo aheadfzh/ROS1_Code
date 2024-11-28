@@ -1,0 +1,3 @@
+<launch>
+   <node pkg="fzh_ur_pkg" type="open_ur.py" name="open_ur" output="screen"/>
+</launch>
